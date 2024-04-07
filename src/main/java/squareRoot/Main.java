@@ -2,6 +2,8 @@ package squareRoot;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println(Math.sqrt(65));
+
         Eiruvin esq = new Eiruvin();
         System.out.println(esq.sqrt(65));
 

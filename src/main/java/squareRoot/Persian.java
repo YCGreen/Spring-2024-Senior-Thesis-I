@@ -8,6 +8,14 @@ public class Persian extends SquareRoot {
 
     public double sqrt(int num) {
         double closest = findClosestSqrtBelow(num);
-        return closest + (num - closest*closest)/(closest*2+1);
+        for(int i = 0; i < 10; i++) {
+            closest += getNextGuess(closest, num);
+        }
+        return closest;
     }
+
+    private double getNextGuess(double guess, int num) {
+        return (num - guess * guess) / (guess * 2 + 1);
+    }
+
 }
