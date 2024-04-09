@@ -9,7 +9,7 @@ public class Heron extends SquareRoot {
     public double sqrt(int num) {
         double closestSqrtBelow = findClosestSqrtBelow(num);
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 4; i++) {
             closestSqrtBelow = (closestSqrtBelow + getNextGuess(closestSqrtBelow, num)) / 2;
         }
 
