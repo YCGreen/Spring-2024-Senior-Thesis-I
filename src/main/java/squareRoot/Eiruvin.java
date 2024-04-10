@@ -18,7 +18,7 @@ public class Eiruvin extends SquareRoot{
     public double sqrt(int num) {
         double closestSqrtBelow = findClosestSqrtBelow(num);
 
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 7; i++) {
             closestSqrtBelow = findNextApproximation(closestSqrtBelow, num - closestSqrtBelow * closestSqrtBelow); //change so find returns square not root?
         }
 
@@ -36,4 +36,17 @@ public class Eiruvin extends SquareRoot{
         return area / length;
     }
 
+    public int iterationsToN(int num, double degree) {
+        double curr = findClosestSqrtBelow(num);
+        double next = findNextApproximation(curr, num - curr * curr);
+        int iter = 1;
+
+        while(Math.abs(curr - next) >= degree) {
+            curr = next;
+            next = findNextApproximation(curr, num - curr * curr);
+            iter++;
+        }
+
+        return iter;
+    }
 }
