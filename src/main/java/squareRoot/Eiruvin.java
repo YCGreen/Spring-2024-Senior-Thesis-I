@@ -16,16 +16,16 @@ public class Eiruvin extends SquareRoot{
     //add 1/5 to each side
 
     public double sqrt(int num) {
-        double closestSqrtBelow = findClosestSqrtBelow(num);
-
-        for(int i = 0; i < 7; i++) {
-            closestSqrtBelow = findNextApproximation(closestSqrtBelow, num - closestSqrtBelow * closestSqrtBelow); //change so find returns square not root?
-        }
-
-        return closestSqrtBelow;
+        return sqrt(num, 7);
     }
 
-    private double findNextApproximation(double currResult, double remainder) {
+    @Override
+    double feedNextApprox(double num, double curr) {
+        return findNextApproximation(curr, num - curr * curr);
+    }
+
+    @Override
+    double findNextApproximation(double currResult, double remainder) {
         double fifth = remainder / 5;
         currResult += 2 * getWidthOfRect(currResult, fifth);
 
@@ -36,17 +36,15 @@ public class Eiruvin extends SquareRoot{
         return area / length;
     }
 
-    public int iterationsToN(int num, double degree) {
-        double curr = findClosestSqrtBelow(num);
-        double next = findNextApproximation(curr, num - curr * curr);
-        int iter = 1;
 
-        while(Math.abs(curr - next) >= degree) {
-            curr = next;
-            next = findNextApproximation(curr, num - curr * curr);
-            iter++;
+    @Override
+    double sqrt(int num, int iter) {
+        double closestSqrtBelow = findClosestSqrtBelow(num);
+
+        for(int i = 0; i < iter; i++) {
+            closestSqrtBelow = feedNextApprox(num, closestSqrtBelow);
         }
 
-        return iter;
+        return closestSqrtBelow;
     }
 }
