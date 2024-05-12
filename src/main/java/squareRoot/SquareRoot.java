@@ -8,7 +8,7 @@ public abstract class SquareRoot {
 
     abstract double sqrt(int num, int iter);
 
-    abstract double feedNextApprox(double curr, double next);
+    abstract double feedNextApprox(double orig, double next);
 
     public int findClosestSqrtBelow(int num) {
         return findClosestSqrtBelow(num, 0, num);
@@ -54,17 +54,33 @@ public abstract class SquareRoot {
 
     public double accuracyInN(int num, int iter) {
         double dec = getDiffSqrt(num, iter);
-        String decStr = getStrAfterDec(dec);
-
         int ind = 0;
-        int ch = decStr.charAt(ind);
+        double ret = 0;
 
-        while(ch == '0') { //if there's nothing after 0 this will fail
-            ind++;
-            ch = decStr.charAt(ind);
+        if(dec != 0) {
+            String decStr = getStrAfterDec(dec);
+
+            int ch = decStr.charAt(ind);
+
+            while(ch == '0') {
+                ind++;
+                ch = decStr.charAt(ind);
+            }
+            ind--;
+            ret = 1.0 / pow(10, ind);
         }
 
-        return ind - 1;
+        return ret;
+    }
+
+    private int pow(int base, int pow) {
+        int ret = base;
+
+        for(int i = 1; i < pow; i++) {
+            ret *= base;
+        }
+
+        return ret;
     }
 
     private double getDiffSqrt(int num, int iter) {
